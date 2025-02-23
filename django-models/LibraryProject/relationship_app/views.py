@@ -54,10 +54,10 @@ def user_logout(request):
 
 
 from django.shortcuts import render
-from django.contrib.auth.decorators import user_passes_test
 from django.http import HttpResponse
+from django.contrib.auth.decorators import user_passes_test
 
-# Helper function to check roles
+# Helper functions to check roles
 def is_admin(user):
     return user.userprofile.role == 'Admin'
 
@@ -67,17 +67,17 @@ def is_librarian(user):
 def is_member(user):
     return user.userprofile.role == 'Member'
 
-# Admin view - accessible only by users with 'Admin' role
+# Admin view - Only accessible by users with the role 'Admin'
 @user_passes_test(is_admin)
 def admin_view(request):
     return HttpResponse("Welcome, Admin! You have full access.")
 
-# Librarian view - accessible only by users with 'Librarian' role
+# Librarian view - Only accessible by users with the role 'Librarian'
 @user_passes_test(is_librarian)
 def librarian_view(request):
     return HttpResponse("Welcome, Librarian! You can manage library resources.")
 
-# Member view - accessible only by users with 'Member' role
+# Member view - Only accessible by users with the role 'Member'
 @user_passes_test(is_member)
 def member_view(request):
     return HttpResponse("Welcome, Member! You have limited access.")
