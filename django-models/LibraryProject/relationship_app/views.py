@@ -54,33 +54,39 @@ def user_logout(request):
 
 
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
+from .models import UserProfile
 
-# Helper functions to check roles
+# Helper function to check if user is admin
 def is_admin(user):
     return user.userprofile.role == 'Admin'
 
+# Helper function to check if user is librarian
 def is_librarian(user):
     return user.userprofile.role == 'Librarian'
 
+# Helper function to check if user is member
 def is_member(user):
     return user.userprofile.role == 'Member'
 
-# Admin view - Only accessible by users with the role 'Admin'
+# Admin view
+@login_required
 @user_passes_test(is_admin)
 def admin_view(request):
-    return HttpResponse("Welcome, Admin! You have full access.")
+    return render(request, 'admin_view.html')
 
-# Librarian view - Only accessible by users with the role 'Librarian'
+# Librarian view
+@login_required
 @user_passes_test(is_librarian)
 def librarian_view(request):
-    return HttpResponse("Welcome, Librarian! You can manage library resources.")
+    return render(request, 'librarian_view.html')
 
-# Member view - Only accessible by users with the role 'Member'
+# Member view
+@login_required
 @user_passes_test(is_member)
 def member_view(request):
-    return HttpResponse("Welcome, Member! You have limited access.")
+    return render(request, 'member_view.html')
 
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import permission_required
