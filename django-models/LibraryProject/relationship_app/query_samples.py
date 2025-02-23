@@ -18,3 +18,15 @@ try:
     print(f"Librarian: {librarian}")
 except Librarian.DoesNotExist:
     print("No librarian assigned to this library.")
+
+# ✅ Required: Retrieve an Author by name
+author_name = "J.K. Rowling"  # Replace with an actual author name in your database
+try:
+    author = Author.objects.get(name=author_name)
+    print(f"Author Found: {author}")
+except Author.DoesNotExist:
+    print("Author not found.")
+
+# ✅ Required: Retrieve all books written by the author
+books_by_author = Book.objects.filter(author=author) if 'author' in locals() else []
+print(f"Books by {author_name}: {list(books_by_author)}")
