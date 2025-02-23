@@ -1,21 +1,20 @@
-# query_samples.py
+from relationship_app.models import Library, Author, Book, Librarian
 
-from relationship_app.models import Author, Book, Library, Librarian
+# Example: Retrieve a Library by name
+library_name = "Central Library"  # Replace with an actual library name in your database
+try:
+    library = Library.objects.get(name=library_name)
+    print(f"Library Found: {library}")
+except Library.DoesNotExist:
+    print("Library not found.")
 
-# 1. Query all books by a specific author
-author = Author.objects.get(name="J.K. Rowling")
-books_by_author = Book.objects.filter(author=author)
-print(f"Books by {author.name}:")
-for book in books_by_author:
-    print(f"- {book.title}")
+# Example: Retrieve all books in the library
+books_in_library = library.books.all() if library else []
+print(f"Books in Library: {books_in_library}")
 
-# 2. List all books in a library
-library = Library.objects.get(name="Main City Library")
-books_in_library = library.books.all()
-print(f"Books in {library.name}:")
-for book in books_in_library:
-    print(f"- {book.title}")
-
-# 3. Retrieve the librarian for a library
-librarian = Librarian.objects.get(library=library)
-print(f"The librarian for {library.name} is {librarian.name}")
+# Example: Retrieve the librarian managing this library
+try:
+    librarian = Librarian.objects.get(library=library)
+    print(f"Librarian: {librarian}")
+except Librarian.DoesNotExist:
+    print("No librarian assigned to this library.")
