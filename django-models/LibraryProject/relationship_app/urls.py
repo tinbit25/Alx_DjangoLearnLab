@@ -6,10 +6,13 @@ urlpatterns = [
     path("library/<int:pk>/", LibraryDetailView.as_view(), name="library_detail"),  # Class-based view
 ]
 
+
+from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LogoutView
 from . import views
 
 urlpatterns = [
-    path('login/', views.user_login, name='login'),
-    path('logout/', views.user_logout, name='logout'),
-    path('register/', views.register, name='register'),
+    path('login/', LoginView.as_view(template_name='relationship_app/login.html'), name='login'),
+    path('logout/', LogoutView.as_view(template_name='relationship_app/logout.html'), name='logout'),
+    path('register/', views.register, name='register'),  # Assuming you have a function-based register view
 ]
