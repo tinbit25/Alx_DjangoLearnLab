@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils import timezone
 
 # Author model
 class Author(models.Model):
@@ -15,7 +16,7 @@ class Author(models.Model):
 class Book(models.Model):
     title = models.CharField(max_length=200)
     author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name="books")
-    published_date = models.DateField()
+    published_date = models.DateField(default=timezone.now)  # Set default value here
 
     class Meta:
         permissions = [
@@ -46,11 +47,7 @@ class Librarian(models.Model):
         return self.name
 
 
-from django.db import models
-from django.contrib.auth.models import User
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-
+# UserProfile model
 class UserProfile(models.Model):
     ROLE_CHOICES = (
         ('Admin', 'Admin'),
