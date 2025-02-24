@@ -19,13 +19,14 @@ urlpatterns = [
 
 
 from django.urls import path
-from . import views
+from .views import admin_view, librarian_view, member_view
 
 urlpatterns = [
-    path('admin_view/', views.admin_view, name='admin_view'),
-    path('librarian_view/', views.librarian_view, name='librarian_view'),
-    path('member_view/', views.member_view, name='member_view'),
+    path('admin-panel/', admin_view, name='admin_view'),
+    path('librarian-dashboard/', librarian_view, name='librarian_view'),
+    path('member-section/', member_view, name='member_view'),
 ]
+
 
 
 from django.urls import path

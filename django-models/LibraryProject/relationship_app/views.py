@@ -53,40 +53,33 @@ def user_logout(request):
     return render(request, 'relationship_app/logout.html')
 
 
+from django.contrib.auth.decorators import user_passes_test, login_required
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.decorators import user_passes_test
-from .models import UserProfile
+from django.http import HttpResponse
 
-# Helper function to check if user is admin
+# Helper functions to check user roles
 def is_admin(user):
-    return user.userprofile.role == 'Admin'
+    return user.is_authenticated and hasattr(user, 'userprofile') and user.userprofile.role == 'Admin'
 
-# Helper function to check if user is librarian
 def is_librarian(user):
-    return user.userprofile.role == 'Librarian'
+    return user.is_authenticated and hasattr(user, 'userprofile') and user.userprofile.role == 'Librarian'
 
-# Helper function to check if user is member
 def is_member(user):
-    return user.userprofile.role == 'Member'
+    return user.is_authenticated and hasattr(user, 'userprofile') and user.userprofile.role == 'Member'
 
-# Admin view
-@login_required
+# Views
 @user_passes_test(is_admin)
 def admin_view(request):
-    return render(request, 'admin_view.html')
+    return HttpResponse("Welcome to the Admin Panel!")
 
-# Librarian view
-@login_required
 @user_passes_test(is_librarian)
 def librarian_view(request):
-    return render(request, 'librarian_view.html')
+    return HttpResponse("Welcome to the Librarian Dashboard!")
 
-# Member view
-@login_required
 @user_passes_test(is_member)
 def member_view(request):
-    return render(request, 'member_view.html')
+    return HttpResponse("Welcome to the Member Section!")
+
 
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import permission_required

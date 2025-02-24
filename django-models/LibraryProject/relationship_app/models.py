@@ -46,7 +46,8 @@ class Librarian(models.Model):
         return self.name
 
 
-# UserProfile model with role-based access control
+
+
 class UserProfile(models.Model):
     ROLE_CHOICES = (
         ('Admin', 'Admin'),
@@ -60,14 +61,12 @@ class UserProfile(models.Model):
     def __str__(self):
         return f"{self.user.username} - {self.role}"
 
-# Django signal to automatically create a UserProfile when a new User is created
+# Django signals to create UserProfile when a new user is registered
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.create(user=instance)
 
-# Django signal to save the UserProfile when the User is saved
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.userprofile.save()
-
