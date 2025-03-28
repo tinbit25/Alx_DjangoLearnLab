@@ -1,13 +1,12 @@
-from rest_framework import generics, permissions  # Importing generics and permissions
+from rest_framework import generics, permissions  # Ensure these are imported
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
 from django.shortcuts import get_object_or_404
-from .models import CustomUser  # Ensure CustomUser is imported from your models
-from rest_framework.permissions import IsAuthenticated  # Ensuring user authentication
+from .models import CustomUser
+from rest_framework.permissions import IsAuthenticated  # Import IsAuthenticated
 
 # Follow and Unfollow views using GenericAPIView
 class FollowUnfollowUserView(generics.GenericAPIView):
-    permission_classes = [IsAuthenticated]  # Ensuring that the user is authenticated before proceeding
+    permission_classes = [IsAuthenticated]  # Ensures the user is authenticated before proceeding
 
     def post(self, request, user_id):
         action = request.data.get("action")  # Action could be 'follow' or 'unfollow'
