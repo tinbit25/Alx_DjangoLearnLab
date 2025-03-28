@@ -85,6 +85,26 @@ DATABASES = {
     }
 }
 
+
+# settings.py
+
+# Step 1: Enforce HTTPS
+SECURE_SSL_REDIRECT = True  # Redirect all non-HTTPS requests to HTTPS
+SECURE_HSTS_SECONDS = 31536000  # 1 year in seconds, instructs browsers to only use HTTPS
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # Apply HSTS to all subdomains
+SECURE_HSTS_PRELOAD = True  # Allow your site to be preloaded in browsers with HSTS
+
+# Step 2: Enforce Secure Cookies
+SESSION_COOKIE_SECURE = True  # Only send session cookies over HTTPS
+CSRF_COOKIE_SECURE = True  # Only send CSRF cookies over HTTPS
+
+# Step 3: Implement Secure Headers
+X_FRAME_OPTIONS = 'DENY'  # Prevent clickjacking attacks by denying your site being framed
+SECURE_CONTENT_TYPE_NOSNIFF = True  # Prevent browsers from sniffing content types
+SECURE_BROWSER_XSS_FILTER = True  # Enable the browser's built-in XSS filter to prevent cross-site scripting
+
+
+
 # AUTH_USER_MODEL = "users.CustomUser"  # Update to use the custom user model
 AUTH_USER_MODEL = 'bookshelf.CustomUser'  # Use 'bookshelf.CustomUser' since it's inside the 'bookshelf' app
 # Security configurations
