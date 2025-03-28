@@ -14,13 +14,13 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent  # Ensure BASE_DIR is a Path object
 
+# Static files settings
 STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / "staticfiles"  # This now correctly uses the Path object
+STATIC_ROOT = BASE_DIR / "staticfiles"  # Directory for collected static files
 
 STATICFILES_DIRS = [
-    BASE_DIR / "blog/static",  # Change this to use Path instead of os.path.join
+    BASE_DIR / "blog/static",  # Check that this directory exists and contains your static files
 ]
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
