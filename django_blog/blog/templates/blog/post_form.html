@@ -1,12 +1,5 @@
-<!-- blog/templates/blog/post_form.html -->
-
-{% extends 'base_generic.html' %}
-
-{% block content %}
-  <h1>Create a New Post</h1>
-  <form method="post">
+<form method="POST">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Save</button>
-  </form>
-{% endblock %}
+    <button type="submit">Submit</button>
+</form>
