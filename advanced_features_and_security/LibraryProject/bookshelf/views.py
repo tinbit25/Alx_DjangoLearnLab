@@ -1,11 +1,19 @@
 # views.py
 
 from django.shortcuts import render
-from django.contrib.auth.decorators import permission_required
-from .models import Book
+from .forms import ExampleForm  # Importing ExampleForm from forms.py
 
-# List of books with permission check
-@permission_required('books.can_view', raise_exception=True)
-def book_list(request):
-    books = Book.objects.all()  # Retrieve all books from the database
-    return render(request, 'book_list.html', {'books': books})
+# Your view function
+def example_view(request):
+    if request.method == 'POST':
+        form = ExampleForm(request.POST)
+        if form.is_valid():
+            # Process the form data
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            message = form.cleaned_data['message']
+            # You can now use these values, e.g., send an email or save to the database
+    else:
+        form = ExampleForm()
+
+    return render(request, 'example_template.html', {'form': form})
