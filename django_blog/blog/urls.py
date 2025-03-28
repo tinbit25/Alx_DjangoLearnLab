@@ -10,14 +10,14 @@ urlpatterns = [
     path('posts/', views.PostListView.as_view(), name='post_list'),  
     
     # View for creating a new post
-    path('posts/new/', views.PostCreateView.as_view(), name='post_create'),  # Ensure this is 'posts/new/'
+    path('post/new/', views.PostCreateView.as_view(), name='post_create'),  # Exact path for creating a new post
     
     # View for viewing a specific post
-    path('posts/<int:pk>/', views.PostDetailView.as_view(), name='post_detail'),
+    path('post/<int:pk>/', views.PostDetailView.as_view(), name='post_detail'),
     
     # View for editing a specific post
-    path('posts/<int:pk>/edit/', views.PostUpdateView.as_view(), name='post_edit'),  # Ensure this is 'posts/<int:pk>/edit/'
+    path('post/<int:pk>/update/', views.PostUpdateView.as_view(), name='post_edit'),  # Exact path for editing a post
 
     # View for deleting a specific post
-    path('posts/<int:pk>/delete/', views.PostDeleteView.as_view(), name='post_delete'),  # Ensure this is 'posts/<int:pk>/delete/'
+    path('post/<int:pk>/delete/', views.PostDeleteView.as_view(), name='post_delete'),  # Exact path for deleting a post
 ]
