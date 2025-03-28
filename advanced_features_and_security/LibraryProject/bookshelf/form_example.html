@@ -1,0 +1,8 @@
+<!-- templates/bookshelf/form_example.html -->
+
+<form method="POST">
+    {% csrf_token %}
+    <!-- Your form fields here -->
+    <input type="text" name="example_field" required>
+    <button type="submit">Submit</button>
+</form>

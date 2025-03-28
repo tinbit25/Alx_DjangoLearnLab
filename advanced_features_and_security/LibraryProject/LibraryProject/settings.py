@@ -87,6 +87,14 @@ DATABASES = {
 
 # AUTH_USER_MODEL = "users.CustomUser"  # Update to use the custom user model
 AUTH_USER_MODEL = 'bookshelf.CustomUser'  # Use 'bookshelf.CustomUser' since it's inside the 'bookshelf' app
+# Security configurations
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = 'DENY'  # Prevent clickjacking
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Only for production (when using HTTPS)
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
