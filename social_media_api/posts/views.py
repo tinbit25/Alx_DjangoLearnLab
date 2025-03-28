@@ -6,34 +6,32 @@ from django.shortcuts import get_object_or_404
 from .models import Post, Like
 from notifications.models import Notification
 from django.contrib.contenttypes.models import ContentType
-from accounts.models import CustomUser
 
 # View for liking a post
 class LikePostView(APIView):
     permission_classes = [IsAuthenticated]  # Ensure that the user is authenticated
 
     def post(self, request, pk):
-        # Retrieve the Post object or raise 404 if not found
+        # Safely retrieve the Post object or return a 404 error if not found
         post = get_object_or_404(Post, pk=pk)
         user = request.user
 
-        # Create or retrieve a Like object, ensuring users can't like the same post twice
+        # Create a like object or retrieve the existing one to prevent duplicate likes
         like, created = Like.objects.get_or_create(user=user, post=post)
 
         if not created:
-            # Return a message if the user has already liked the post
             return Response({"message": "You have already liked this post."}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Create a notification for the post author (user who owns the post)
+        # Create a notification for the post's author
         notification = Notification.objects.create(
-            recipient=post.author,  # Assuming Post model has an 'author' field
+            recipient=post.author,  # Assuming the post has an 'author' field
             actor=user,
             verb="liked your post",
             target=post,
             target_ct=ContentType.objects.get_for_model(post),
         )
 
-        # Return a success message with notification details
+        # Return a success response along with notification details
         return Response({"message": "Post liked successfully.", "notification": str(notification)}, status=status.HTTP_201_CREATED)
 
 
@@ -42,20 +40,19 @@ class UnlikePostView(APIView):
     permission_classes = [IsAuthenticated]  # Ensure that the user is authenticated
 
     def post(self, request, pk):
-        # Retrieve the Post object or raise 404 if not found
+        # Safely retrieve the Post object or return a 404 error if not found
         post = get_object_or_404(Post, pk=pk)
         user = request.user
 
-        # Check if the user has liked the post, and if so, remove the like
+        # Find the like object to delete
         like = Like.objects.filter(user=user, post=post).first()
         if not like:
-            # Return a message if the user has not liked the post
             return Response({"message": "You have not liked this post."}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Remove the like
+        # Delete the like object
         like.delete()
 
-        # Optionally, delete the corresponding notification
+        # Optionally, remove the corresponding notification
         Notification.objects.filter(
             recipient=post.author,
             actor=user,
