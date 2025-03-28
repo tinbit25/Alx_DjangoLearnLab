@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
     # Post URLs
+     path('tags/<slug:tag_slug>/', views.PostByTagListView.as_view(), name='post_by_tag'),
     path('posts/<int:pk>/', views.post_detail, name='post_detail'),  # View a specific post
 
     # Comment related URLs
