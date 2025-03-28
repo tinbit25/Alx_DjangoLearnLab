@@ -11,14 +11,13 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 from pathlib import Path
 import os
-BASE_DIR = Path(__file__).resolve().parent.parent  # Ensure this is a Path object
+# settings.py
 
+# settings.py
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'  # Ensure this is set correctly
+STATICFILES_DIRS = [BASE_DIR / 'blog/static']  # This will look for static files in the blog/static directory
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # Directory for collecting static files
 
-STATICFILES_DIRS = [
-    BASE_DIR / 'blog/static',  # Make sure this points to the correct static folder
-]
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -66,7 +65,9 @@ ROOT_URLCONF = 'django_blog.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+             BASE_DIR / 'blog/templates',
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
