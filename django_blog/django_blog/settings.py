@@ -11,10 +11,13 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 from pathlib import Path
 import os
-# settings.py
+
 
 # settings.py
+BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_URL = '/static/'
+# settings.py
+
 STATICFILES_DIRS = [BASE_DIR / 'blog/static']  # This will look for static files in the blog/static directory
 STATIC_ROOT = BASE_DIR / 'staticfiles'  # Directory for collecting static files
 
