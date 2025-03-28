@@ -2,15 +2,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('register/', views.UserRegistrationView.as_view(), name='register'),
-    path('login/', views.UserLoginView.as_view(), name='login'),
-    path('profile/', views.UserProfileView.as_view(), name='profile'),
-]
-from django.urls import path
-from . import views
-
-urlpatterns = [
-    path('follow/<int:user_id>/', views.follow_user, name='follow_user'),
-    path('unfollow/<int:user_id>/', views.unfollow_user, name='unfollow_user'),
-    path('users/', views.UserListView.as_view(), name='user_list'),  # This will list all users
+    path('follow_unfollow/<int:user_id>/', views.FollowUnfollowUserView.as_view(), name='follow_unfollow_user'),
+    path('users/', views.ListAllUsersView.as_view(), name='list_all_users'),  # Optional for testing
 ]
