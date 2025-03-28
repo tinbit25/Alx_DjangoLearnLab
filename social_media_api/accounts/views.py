@@ -1,16 +1,17 @@
-from rest_framework import generics, permissions  # Ensure these are imported
+from rest_framework import generics, permissions
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from .models import CustomUser
-from rest_framework.permissions import IsAuthenticated  # Import IsAuthenticated
-
-# Follow and Unfollow views using GenericAPIView
+from rest_framework.permissions import IsAuthenticated  # Import IsAuthenticate
+# Follow and Unfollow functionality
 class FollowUnfollowUserView(generics.GenericAPIView):
-    permission_classes = [IsAuthenticated]  # Ensures the user is authenticated before proceeding
+    permission_classes = [IsAuthenticated]  # Ensure this is present to enforce authentication
 
     def post(self, request, user_id):
         action = request.data.get("action")  # Action could be 'follow' or 'unfollow'
-        user_to_modify = get_object_or_404(CustomUser, id=user_id)  # Get the user to follow/unfollow
+        
+        # Fetch the user to follow/unfollow
+        user_to_modify = get_object_or_404(CustomUser, id=user_id)
 
         if action == 'follow':
             if user_to_modify == request.user:
@@ -25,12 +26,3 @@ class FollowUnfollowUserView(generics.GenericAPIView):
             return Response({'message': 'You have unfollowed this user.'})
 
         return Response({"message": "Invalid action. Use 'follow' or 'unfollow'."}, status=400)
-
-# Optionally: To get a list of all users (useful for testing or general API functionality)
-class ListAllUsersView(generics.GenericAPIView):
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request):
-        users = CustomUser.objects.all()  # Retrieve all users
-        user_data = [{"id": user.id, "username": user.username} for user in users]  # Format the data as needed
-        return Response({"users": user_data})
