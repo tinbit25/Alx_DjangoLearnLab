@@ -12,4 +12,5 @@ from . import views
 urlpatterns = [
     path('follow/<int:user_id>/', views.follow_user, name='follow_user'),
     path('unfollow/<int:user_id>/', views.unfollow_user, name='unfollow_user'),
+    path('users/', views.UserListView.as_view(), name='user_list'),  # This will list all users
 ]
