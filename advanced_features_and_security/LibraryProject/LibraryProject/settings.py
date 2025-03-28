@@ -85,7 +85,8 @@ DATABASES = {
     }
 }
 
-AUTH_USER_MODEL = "users.CustomUser"  # Update to use the custom user model
+# AUTH_USER_MODEL = "users.CustomUser"  # Update to use the custom user model
+AUTH_USER_MODEL = 'bookshelf.CustomUser'  # Use 'bookshelf.CustomUser' since it's inside the 'bookshelf' app
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

@@ -4,20 +4,9 @@ from .models import CustomUser
 
 class CustomUserAdmin(UserAdmin):
     model = CustomUser
-    list_display = ("email", "username", "date_of_birth", "is_staff", "is_active")
-    fieldsets = (
-        (None, {"fields": ("email", "password")}),
-        ("Personal Info", {"fields": ("username", "date_of_birth", "profile_photo")}),
-        ("Permissions", {"fields": ("is_staff", "is_superuser", "groups", "user_permissions")}),
-        ("Important Dates", {"fields": ("last_login", "date_joined")}),
+    list_display = ("username", "email", "date_of_birth", "is_staff")
+    fieldsets = UserAdmin.fieldsets + (
+        (None, {"fields": ("date_of_birth", "profile_photo")}),
     )
-    add_fieldsets = (
-        (None, {
-            "classes": ("wide",),
-            "fields": ("email", "username", "date_of_birth", "profile_photo", "password1", "password2"),
-        }),
-    )
-    search_fields = ("email", "username")
-    ordering = ("email",)
 
 admin.site.register(CustomUser, CustomUserAdmin)
