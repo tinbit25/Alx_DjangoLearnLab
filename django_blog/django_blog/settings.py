@@ -11,15 +11,13 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 from pathlib import Path
 import os
+BASE_DIR = Path(__file__).resolve().parent.parent  # Ensure this is a Path object
 
-BASE_DIR = Path(__file__).resolve().parent.parent  # Ensure BASE_DIR is a Path object
-
-# Static files settings
-STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / "staticfiles"  # Directory for collected static files
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # Ensure this is set correctly
 
 STATICFILES_DIRS = [
-    BASE_DIR / "blog/static",  # Check that this directory exists and contains your static files
+    BASE_DIR / 'blog/static',  # Make sure this points to the correct static folder
 ]
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -63,7 +61,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'temp_project.urls'
+ROOT_URLCONF = 'django_blog.urls'
 
 TEMPLATES = [
     {
@@ -81,8 +79,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'temp_project.wsgi.application'
-
+WSGI_APPLICATION = 'django_blog.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
