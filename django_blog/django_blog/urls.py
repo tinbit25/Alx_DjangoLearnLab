@@ -6,7 +6,7 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     # Include other apps' urls here
-    path('users/', include('blog.users.urls')),  # Example for user-related URLs
+     
 ]
 
 # Serve static files during development
