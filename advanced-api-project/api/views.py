@@ -1,34 +1,22 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, filters
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import Book
 from .serializers import BookSerializer
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
-#from rest_framework import generics
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
-from .models import Book
-from .serializers import BookSerializer
-
-class BookListView(generics.ListCreateAPIView):
+class BookListView(generics.ListAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]  # Anyone can read, only authenticated users can create
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    
+    # Adding Filtering, Searching, and Ordering
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
 
-class BookDetailView(generics.RetrieveAPIView):
-    queryset = Book.objects.all()
-    serializer_class = BookSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]  # Read access for all, write restricted
+    # Filtering options (users can filter by these fields)
+    filterset_fields = ['title', 'author', 'publication_year']
 
-class BookCreateView(generics.CreateAPIView):
-    queryset = Book.objects.all()
-    serializer_class = BookSerializer
-    permission_classes = [IsAuthenticated]  # Only authenticated users can create
+    # Search functionality (users can search by title or author)
+    search_fields = ['title', 'author']
 
-class BookUpdateView(generics.UpdateAPIView):
-    queryset = Book.objects.all()
-    serializer_class = BookSerializer
-    permission_classes = [IsAuthenticated]  # Only authenticated users can update
-
-class BookDeleteView(generics.DestroyAPIView):
-    queryset = Book.objects.all()
-    serializer_class = BookSerializer
-    permission_classes = [IsAuthenticated]  # Only authenticated users can delete
+    # Ordering options (users can order results by these fields)
+    ordering_fields = ['title', 'publication_year']
