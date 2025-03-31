@@ -8,13 +8,12 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
 
+
 class Post(models.Model):
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=200)
     content = models.TextField()
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    tags = models.ManyToManyField(Tag, related_name='posts', blank=True)  # Add this line
+    published_date = models.DateTimeField(auto_now_add=True)  # This will automatically set the date and time when a post is created
+    author = models.ForeignKey(User, on_delete=models.CASCADE)  # Relation to the User model for authorship
 
     def __str__(self):
         return self.title
