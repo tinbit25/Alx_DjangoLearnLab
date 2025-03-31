@@ -1,20 +1,15 @@
-from django.shortcuts import render
-from .models import Post
+from django.shortcuts import render, redirect
+from django.contrib.auth import login
+from .forms import UserRegisterForm  # Import your custom form
 
-def post_search(request):
-    query = request.GET.get('q', '')  # Get search query from URL parameter 'q'
-    
-    # Filter posts based on the query, matching title, tags, or content
-    posts = Post.objects.filter(
-        title__icontains=query  # Search by title (case-insensitive)
-    )
-    
-    # If a query is present, also filter by tags and content
-    if query:
-        posts = posts.filter(
-            title__icontains=query | 
-            tags__name__icontains=query |  # Search by tags (case-insensitive)
-            content__icontains=query  # Search by content (case-insensitive)
-        )
-    
-    return render(request, 'post_search_results.html', {'posts': posts, 'query': query})
+def register(request):
+    if request.method == "POST":  # Ensure method is checked
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()  # Save the new user
+            login(request, user)  # Log the user in after registration
+            return redirect('profile')  # Redirect to profile page
+    else:
+        form = UserRegisterForm()
+
+    return render(request, 'blog/register.html', {'form': form})
