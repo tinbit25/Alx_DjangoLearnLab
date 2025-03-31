@@ -13,21 +13,18 @@ from pathlib import Path
 import os
 
 
-# settings.py
+
 BASE_DIR = Path(__file__).resolve().parent.parent
-# settings.py
 
-STATIC_URL = '/static/'
+STATIC_URL = '/static/'  # URL to access static files
 
-# For production, you would also configure STATICFILES_DIRS to point to your static files location
+# Ensure Django can find your static files in development
 STATICFILES_DIRS = [
     BASE_DIR / 'blog/static',
 ]
 
-# settings.py
-
-STATICFILES_DIRS = [BASE_DIR / 'blog/static']  # This will look for static files in the blog/static directory
-STATIC_ROOT = BASE_DIR / 'staticfiles'  # Directory for collecting static files
+# For production, collect static files in one place
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
