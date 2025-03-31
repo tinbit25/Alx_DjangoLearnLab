@@ -15,7 +15,15 @@ import os
 
 # settings.py
 BASE_DIR = Path(__file__).resolve().parent.parent
+# settings.py
+
 STATIC_URL = '/static/'
+
+# For production, you would also configure STATICFILES_DIRS to point to your static files location
+STATICFILES_DIRS = [
+    BASE_DIR / 'blog/static',
+]
+
 # settings.py
 
 STATICFILES_DIRS = [BASE_DIR / 'blog/static']  # This will look for static files in the blog/static directory
