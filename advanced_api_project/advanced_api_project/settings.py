@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-cka4_)(7581364et$=k*o&rj!&nequ(c2@#$=)$hn3dkr+-zj#'
+SECRET_KEY = 'django-insecure-n-c@-=$rgu4i%*phf+0&1s%h(v)qtnu@^#tf7r6glio3!lji*$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,8 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-     'rest_framework',  # Add DRF
-    'api', 
+    'rest_framework',  # Added for DRF
+    'api',  
 ]
 
 MIDDLEWARE = [
@@ -78,10 +78,9 @@ WSGI_APPLICATION = 'advanced_api_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / "db.sqlite3",
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 
 # Password validation
