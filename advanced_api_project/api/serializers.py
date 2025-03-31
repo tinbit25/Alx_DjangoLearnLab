@@ -3,21 +3,18 @@ from .models import Author, Book
 import datetime
 
 class BookSerializer(serializers.ModelSerializer):
-    """Serializes all fields of the Book model with custom validation."""
-    
-    def validate_publication_year(self, value):
-        """Ensure publication year is not in the future."""
-        if value > datetime.date.today().year:
-            raise serializers.ValidationError("Publication year cannot be in the future.")
-        return value
-
     class Meta:
         model = Book
         fields = '__all__'
 
+    def validate_publication_year(self, value):
+        current_year = datetime.date.today().year
+        if value > current_year:
+            raise serializers.ValidationError("Publication year cannot be in the future.")
+        return value
+
 class AuthorSerializer(serializers.ModelSerializer):
-    """Serializes the Author model with nested books."""
-    books = BookSerializer(many=True, read_only=True)  # Nested serialization
+    books = BookSerializer(many=True, read_only=True)
 
     class Meta:
         model = Author
